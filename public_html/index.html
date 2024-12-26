@@ -3,308 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Light & Dark Mode Calculator</title>
+    <title>Calculator</title>
     <style>
         /* Universal Reset */
-        * 
+        *
         {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body 
+        body
         {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         /* Light and Dark Mode */
-        body.light 
+        body.light
         {
-            background-color: #f0f0f0; /* Light mode background */
+            background-color: #f0f0f0;
             color: black;
         }
 
-        body.dark 
+        body.dark
         {
-            background-color: #000; /* Dark mode background */
-            color: white;
+            background-color: #000;
+            color: #BEBDB8;
         }
 
-        .calculator 
+        .calculator
         {
-            width: 320px;
+            width: 300px;
             border-radius: 20px;
             padding: 20px;
-            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
             transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .calculator.light 
+        .calculator.light
         {
-            background-color: #ffffff; /* Light mode calculator body */
+            background-color: #ffffff;
         }
 
-        .calculator.dark 
+        .calculator.dark
         {
-            background-color: #111; /* Dark mode calculator body */
+            background-color: #1C1C1E;
         }
 
-        .display 
+        .display
         {
-            height: 80px;
+            height: 60px;
             border-radius: 10px;
-            padding: 10px 20px;
-            margin-bottom: 20px;
-            font-size: 2rem;
+            padding: 10px;
+            font-size: 1.5rem;
             text-align: right;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: flex-end;
+            background-color: #333;
+            color: #BEBDB8;
             transition: background-color 0.3s, color 0.3s;
         }
 
-        .display.light 
-        {
-            background-color: #f7f7f7; /* Light mode display */
-            color: black;
-        }
-
-        .display.dark 
-        {
-            background-color: #000; /* Dark mode display */
-            color: #0f0;
-        }
-
-        .buttons 
+        .buttons
         {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
+            gap: 10px;
         }
 
-        button 
+        button
         {
-            height: 60px;
-            border-radius: 50%; /* Circular buttons */
-            font-size: 1.4rem;
+            height: 50px;
+            border-radius: 10px;
+            font-size: 1.2rem;
             border: none;
             cursor: pointer;
             transition: 0.3s ease;
         }
 
-        /* Button Themes */
-        button.light 
+        button.light
         {
-            background-color: #ddd; /* Light mode buttons */
+            background-color: #E0E0E0;
             color: black;
         }
 
-        button.dark 
+        button.dark
         {
-            background-color: #333; /* Dark mode buttons */
+            background-color: #444;
+            color: #BEBDB8;
+        }
+
+        button.operation
+        {
+            background-color: #34C759;
             color: white;
         }
 
-        button.operation.light 
+        button.equal
         {
-            background-color: #0f0;
-            color: black;
+            background-color: #007AFF;
+            color: white;
         }
 
-        button.operation.dark 
+        button.clear
         {
-            background-color: #0f0;
-            color: black;
+            background-color: #FF3B30;
+            color: white;
         }
 
-        button.equal.light 
+        button:hover
         {
-            background-color: #008000;
+            opacity: 0.9;
         }
 
-        button.equal.dark 
+        .toggle-btn
         {
-            background-color: #008000;
-        }
-
-        button.clear.light 
-        {
-            background-color: #d22;
-        }
-
-        button.clear.dark 
-        {
-            background-color: #d22;
-        }
-
-        button:hover 
-        {
-            opacity: 0.85;
-        }
-
-        /* Toggle Button */
-        .toggle-btn 
-        {
-            margin-bottom: 20px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             background-color: transparent;
             border: 2px solid currentColor;
-            border-radius: 5px;
-            padding: 5px 10px;
+            border-radius: 10px;
+            padding: 5px 15px;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
         }
 
-        .toggle-btn.light 
+        .toggle-btn.light
         {
             background-color: white;
             color: black;
         }
 
-        .toggle-btn.dark 
+        .toggle-btn.dark
         {
-            background-color: black;
-            color: white;
+            background-color: #333;
+            color: #BEBDB8;
         }
     </style>
 </head>
 <body class="dark">
     <div class="calculator dark">
-        <!-- Light/Dark Mode Toggle -->
         <button class="toggle-btn dark" id="toggle-theme">Switch to Light Mode</button>
-        
-        <!-- Display Screen -->
-        <div class="display dark" id="display">0</div>
-        
-        <!-- Button Layout -->
+        <div class="display" id="display">0</div>
         <div class="buttons">
-            <button class="clear dark" data-value="C">C</button>
-            <button class="special dark" data-value="(">(</button>
-            <button class="special dark" data-value=")">)</button>
-            <button class="operation dark" data-value="/">÷</button>
+            <button data-value="7">7</button>
+            <button data-value="8">8</button>
+            <button data-value="9">9</button>
+            <button class="operation" data-value="/">&divide;</button>
 
-            <button class="dark" data-value="7">7</button>
-            <button class="dark" data-value="8">8</button>
-            <button class="dark" data-value="9">9</button>
-            <button class="operation dark" data-value="*">×</button>
+            <button data-value="4">4</button>
+            <button data-value="5">5</button>
+            <button data-value="6">6</button>
+            <button class="operation" data-value="*">&times;</button>
 
-            <button class="dark" data-value="4">4</button>
-            <button class="dark" data-value="5">5</button>
-            <button class="dark" data-value="6">6</button>
-            <button class="operation dark" data-value="-">−</button>
+            <button data-value="1">1</button>
+            <button data-value="2">2</button>
+            <button data-value="3">3</button>
+            <button class="operation" data-value="-">&minus;</button>
 
-            <button class="dark" data-value="1">1</button>
-            <button class="dark" data-value="2">2</button>
-            <button class="dark" data-value="3">3</button>
-            <button class="operation dark" data-value="+">+</button>
+            <button data-value="0">0</button>
+            <button data-value=".">.</button>
+            <button class="equal" data-value="=">=</button>
+            <button class="operation" data-value="+">+</button>
 
-            <button class="special dark" data-value="+/-">+/-</button>
-            <button class="dark" data-value="0">0</button>
-            <button class="special dark" data-value=".">.</button>
-            <button class="equal dark" data-value="=">=</button>
+            <button class="clear" data-value="C">AC</button>
         </div>
     </div>
 
     <script>
         const display = document.getElementById('display');
         const toggleThemeBtn = document.getElementById('toggle-theme');
-        const calculator = document.querySelector('.calculator');
-        const body = document.body;
-        const buttons = document.querySelectorAll('button');
+        const buttons = document.querySelectorAll('button[data-value]');
 
-        let currentInput = '';
-        let previousInput = '';
-        let operator = '';
+        let expression = '';
 
-        // Light/Dark Mode Toggle
-        toggleThemeBtn.addEventListener('click', () => 
+        toggleThemeBtn.addEventListener('click', () =>
         {
-            body.classList.toggle('dark');
-            body.classList.toggle('light');
-            calculator.classList.toggle('dark');
-            calculator.classList.toggle('light');
-            display.classList.toggle('dark');
-            display.classList.toggle('light');
-            toggleThemeBtn.classList.toggle('dark');
-            toggleThemeBtn.classList.toggle('light');
-
-            buttons.forEach(button => 
-            {
-                button.classList.toggle('dark');
-                button.classList.toggle('light');
-            });
-
-            // Update toggle button text
-            toggleThemeBtn.textContent = body.classList.contains('dark')
-                ? 'Switch to Light Mode'
-                : 'Switch to Dark Mode';
+            document.body.classList.toggle('light');
+            document.body.classList.toggle('dark');
+            const theme = document.body.classList.contains('light') ? 'Light' : 'Dark';
+            toggleThemeBtn.textContent = `Switch to ${theme === 'Light' ? 'Dark' : 'Light'} Mode`;
         });
 
-        // Calculator Logic
-        document.querySelectorAll('button').forEach(button => 
+        buttons.forEach(button =>
         {
-            button.addEventListener('click', () => 
+            button.addEventListener('click', () =>
             {
                 const value = button.dataset.value;
 
-                if (value === 'C') 
+                if (value === 'C')
                 {
-                    currentInput = '';
-                    previousInput = '';
-                    operator = '';
+                    expression = '';
                     display.textContent = '0';
-                } 
-                else if (value === '+/-') 
+                }
+                else if (value === '=')
                 {
-                    if (currentInput) 
+                    try
                     {
-                        currentInput = String(parseFloat(currentInput) * -1);
-                        display.textContent = currentInput;
+                        expression = eval(expression).toString();
+                        display.textContent = expression;
                     }
-                } 
-                else if (value === '=') 
-                {
-                    if (operator && currentInput) 
+                    catch
                     {
-                        try 
-                        {
-                            const expression = `${previousInput} ${operator} ${currentInput}`;
-                            currentInput = eval(expression);
-                            display.textContent = currentInput;
-                            previousInput = currentInput;
-                            currentInput = '';
-                            operator = '';
-                        } 
-                        catch 
-                        {
-                            display.textContent = 'Error';
-                        }
+                        display.textContent = 'Error';
+                        expression = '';
                     }
-                } 
-                else if (['+', '-', '*', '/', '%'].includes(value)) 
+                }
+                else
                 {
-                    operator = value;
-                    previousInput = currentInput || '0';
-                    currentInput = '';
-                } 
-                else if (value === '.') 
-                {
-                    if (!currentInput.includes('.')) 
-                    {
-                        currentInput += value;
-                        display.textContent = currentInput;
-                    }
-                } 
-                else 
-                {
-                    currentInput += value;
-                    display.textContent = currentInput;
+                    expression += value;
+                    display.textContent = expression;
                 }
             });
         });
